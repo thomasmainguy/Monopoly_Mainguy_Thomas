@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4096b9890e89e1d4b8ac4ac560ade16f, type: 3}
+  m_Name: Orange3
+  m_EditorClassIdentifier: 
+  m_Color: {r: 0.8980392, g: 0.48235294, b: 0.12941177, a: 1}
+  m_Name: Orange3
+  m_Cost: 200
+  m_Rent: 16
+  m_CostToBuyAHouse: 100
+  m_Cost1House: 80
+  m_Cost2House: 220
+  m_Cost3House: 600
+  m_Cost4House: 800
+  m_CostHotel: 1000

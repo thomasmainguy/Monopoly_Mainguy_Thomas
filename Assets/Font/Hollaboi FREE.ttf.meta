@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: a9432443e9ad7e747a17cbda78179e6e
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Hollaboi FREE
+  fontNames:
+  - Hollaboi FREE
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 99e05d5551bdbf94098570b174e8f3ad, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
