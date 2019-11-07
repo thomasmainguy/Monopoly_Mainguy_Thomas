@@ -148,6 +148,8 @@ public class PlayersController : MonoBehaviour
     private bool m_JustRolled = false;
     private float m_Timer = 0;
 
+    public GameObject m_MainCamera;
+
     private bool m_UsingCheats = false;
 
     //Electricity Buy cost
@@ -204,6 +206,8 @@ public class PlayersController : MonoBehaviour
     private string m_ColorOfCardStr = "";
     private bool m_NextCards = false;
 
+    [SerializeField]
+    private List<int> m_NumbersOfHousesPossible = new List<int>();
 
     //set up des variables membre
     public void Awake()
@@ -420,6 +424,12 @@ public class PlayersController : MonoBehaviour
     //--- Chance Button--- appuyer sur le bouton pickup card pour prendre la carte chance
     public void PickUpChanceCard()
     {
+        for(int i = 0; i < m_PlayerList.Count; i++)
+        {
+            m_PlayerList[i].m_Camera.SetActive(false);
+        }
+
+        m_MainCamera.SetActive(true);
         m_ChanceCommunityText.enabled = true;
         m_NextButton.enabled = false;
         m_ChanceButtonGO.SetActive(false);
@@ -444,6 +454,11 @@ public class PlayersController : MonoBehaviour
     //--- X Button---Appeler pour X suite a la lecture de la carte
     public void ClearCard()
     {
+        for(int i = 0; i < m_PlayerList.Count; i++)
+        {
+            m_PlayerList[i].m_Camera.SetActive(false);
+        }
+        m_PlayerList[m_Turn].m_Camera.SetActive(true);
         m_ChanceCommunityText.enabled = false;
         m_CardObjectGO.SetActive(false);
         m_HouseCardGO.SetActive(false);
@@ -482,27 +497,59 @@ public class PlayersController : MonoBehaviour
                         m_PreviewButton.enabled = true;
                         break;
                     case 0:
-                        m_PlayerList[0].m_Cash += m_CardList[i].m_Data.GetRent();
-                        m_PlayerList[m_Turn].m_Cash -= m_CardList[i].m_Data.GetRent();
-                        UpdateStringCash();
+                        CheckHousesOn(0,i);
                         break;
                     case 1:
-                        m_PlayerList[1].m_Cash += m_CardList[i].m_Data.GetRent();
-                        m_PlayerList[m_Turn].m_Cash -= m_CardList[i].m_Data.GetRent();
-                        UpdateStringCash();
+                        CheckHousesOn(1,i);
                         break;
                     case 2:
-                        m_PlayerList[2].m_Cash += m_CardList[i].m_Data.GetRent();
-                        m_PlayerList[m_Turn].m_Cash -= m_CardList[i].m_Data.GetRent();
-                        UpdateStringCash();
+                        CheckHousesOn(2,i);
                         break;
                     case 3:
-                        m_PlayerList[3].m_Cash += m_CardList[i].m_Data.GetRent();
-                        m_PlayerList[m_Turn].m_Cash -= m_CardList[i].m_Data.GetRent();
-                        UpdateStringCash();
+                        CheckHousesOn(3,i);
                         break;
                 }
             }
+        }
+    }
+
+    private void CheckHousesOn(int player, int i)
+    {
+        if(m_CardList[i].m_NumberOfHouseOn == 0)
+        {
+            m_PlayerList[player].m_Cash += m_CardList[i].m_Data.GetRent();
+            m_PlayerList[m_Turn].m_Cash -= m_CardList[i].m_Data.GetRent();
+            UpdateStringCash();
+        }
+        else if(m_CardList[i].m_NumberOfHouseOn == 1)
+        {
+            m_PlayerList[player].m_Cash += m_CardList[i].m_Data.GetCost1();
+            m_PlayerList[m_Turn].m_Cash -= m_CardList[i].m_Data.GetCost1();
+            UpdateStringCash();
+        }
+        else if(m_CardList[i].m_NumberOfHouseOn == 2)
+        {
+            m_PlayerList[player].m_Cash += m_CardList[i].m_Data.GetCost2();
+            m_PlayerList[m_Turn].m_Cash -= m_CardList[i].m_Data.GetCost2();
+            UpdateStringCash();
+        }
+        else if(m_CardList[i].m_NumberOfHouseOn == 3)
+        {
+            m_PlayerList[player].m_Cash += m_CardList[i].m_Data.GetCost3();
+            m_PlayerList[m_Turn].m_Cash -= m_CardList[i].m_Data.GetCost3();
+            UpdateStringCash();
+        }
+        else if(m_CardList[i].m_NumberOfHouseOn == 4)
+        {
+            m_PlayerList[player].m_Cash += m_CardList[i].m_Data.GetCost4();
+            m_PlayerList[m_Turn].m_Cash -= m_CardList[i].m_Data.GetCost4();
+            UpdateStringCash();
+        }
+        else if(m_CardList[i].m_NumberOfHouseOn == 5)
+        {
+            m_PlayerList[player].m_Cash += m_CardList[i].m_Data.GetCostHotel();
+            m_PlayerList[m_Turn].m_Cash -= m_CardList[i].m_Data.GetCostHotel();
+            UpdateStringCash();
         }
     }
 
@@ -516,11 +563,21 @@ public class PlayersController : MonoBehaviour
         UpdateStringCash();
         m_PreviewButton.enabled = false;
         m_HouseCardGO.SetActive(false);
+        for(int i = 0; i < m_PlayerList.Count; i++)
+        {
+            m_PlayerList[i].m_Camera.SetActive(false);
+        }
+        m_PlayerList[m_Turn].m_Camera.SetActive(true);
     }
 
     //---Preview Button---Preview the card you can possibily buy UI
     public void PreviewCard()
     {
+        for(int i = 0; i < m_PlayerList.Count; i++)
+        {
+            m_PlayerList[i].m_Camera.SetActive(false);
+        }
+        m_MainCamera.SetActive(true);
         if(m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data != null)
         {
             m_CardNameText.text = m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetName();
@@ -554,7 +611,13 @@ public class PlayersController : MonoBehaviour
         m_PreviewButton.enabled = false;
         m_PlayerList[m_Turn].m_Cash -= m_CostElectricity;
         m_ElectricityCardGO.SetActive(false);
+        m_MainCamera.SetActive(false);
         UpdateStringCash();
+        for(int i = 0; i < m_PlayerList.Count; i++)
+        {
+            m_PlayerList[i].m_Camera.SetActive(false);
+        }
+        m_PlayerList[m_Turn].m_Camera.SetActive(true);
     }
     
     //Check if the player is on a community or chance case
@@ -867,9 +930,9 @@ public class PlayersController : MonoBehaviour
                     m_PlayerList[m_Turn].m_Cash -= m_PlayerList[m_Turn].m_HouseBought[i].m_Data.GetCostToBuyAHouse();
                     m_CardList[m_PlayerList[m_Turn].m_HouseBought[i].m_Position - 1].m_NumberOfHouseOn++;
                     Instantiate(m_KeepGO,  
-                                new Vector3((float)(m_PlayerList[m_Turn].m_HouseBought[i].m_VectorPosition.transform.position.x + m_PositionInX), 
-                                m_PlayerList[m_Turn].m_HouseBought[i].m_VectorPosition.transform.position.y + m_PositionInY, 
-                                m_PlayerList[m_Turn].m_HouseBought[i].m_VectorPosition.transform.position.z + m_PositionInZ),
+                                new Vector3((float)(m_PlayerList[m_Turn].m_HouseBought[i].m_VectorPosition.transform.position.x + m_PositionInX - 2.27f), 
+                                m_PlayerList[m_Turn].m_HouseBought[i].m_VectorPosition.transform.position.y + m_PositionInY + 0.55f, 
+                                m_PlayerList[m_Turn].m_HouseBought[i].m_VectorPosition.transform.position.z + m_PositionInZ  - 3.8f),
                                 Quaternion.identity); 
                 }
                 tIter++;
@@ -886,6 +949,11 @@ public class PlayersController : MonoBehaviour
         m_PlayerList[m_Turn].m_Cash -= m_CostRailRoad;
         m_RailRoadCardGO.SetActive(false);
         UpdateStringCash();
+        for(int i = 0; i < m_PlayerList.Count; i++)
+        {
+            m_PlayerList[i].m_Camera.SetActive(false);
+        }
+        m_PlayerList[m_Turn].m_Camera.SetActive(true);
     }
 
 }
