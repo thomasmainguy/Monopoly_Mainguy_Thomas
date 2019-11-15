@@ -1,14 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using UnityEngine.SceneManagement;
 
-public class LvlManager : Singleton
+public class UIManager : Singleton
 {
-    private static LvlManager m_Instance;
-    public static LvlManager Instance
+    private static UIManager m_Instance;
+    public static UIManager Instance
     {
         get { return m_Instance; }
     }
@@ -26,10 +23,5 @@ public class LvlManager : Singleton
             m_Instance = this;
         }
         base.Awake();
-    }
-
-    public void LoadAScene(string a_String )
-    {
-        SceneManager.LoadScene(a_String);
     }
 }

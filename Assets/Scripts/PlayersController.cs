@@ -39,15 +39,16 @@ public class PlayersController : MonoBehaviour
     private int m_CheatRoll = 0;
 
     //Community and chance List for random results when you hit it
+    [Header("Sentence for Community and Chance")]
     [SerializeField]
-    private List<string> m_LosingMoneyString = new List<string>() {"All you have accomplished ends here...\n", 
-                                                                   "You've been lucky from here on? It ends here!\n", 
-                                                                   "You better run from this card quick\n", 
-                                                                   "You encounter a chest... you open it... It's you're mom with a sandal!!\n", 
+    private List<string> m_LosingMoneyString = new List<string>() {"All you have accomplished ends here...\n",
+                                                                   "You've been lucky from here on? It ends here!\n",
+                                                                   "You better run from this card quick\n",
+                                                                   "You encounter a chest... you open it... It's you're mom with a sandal!!\n",
                                                                    "Time to pay baby\n"};
     [SerializeField]
-    private List<string> m_GainingMoneyString = new List<string>() {"Money Shot!!\n", 
-                                                                    "Make it rain on them!\n", 
+    private List<string> m_GainingMoneyString = new List<string>() {"Money Shot!!\n",
+                                                                    "Make it rain on them!\n",
                                                                     "Four beefy boys are coming to you... They say we have so much money we'll give you some!\n", 
                                                                     "You're at your computer when you're mom comes in... She give you your money lunch :)\n", 
                                                                     "Look at those GAINS!!!\n"};
@@ -55,14 +56,23 @@ public class PlayersController : MonoBehaviour
     private List<int> m_Community = new List<int>() {-200, -150, -100, -50, -25, 50, 100};
     private List<int> m_Chance = new List<int>() {200, 150, 100, 50, 25, 50, 100, -25, -50};
 
-    //lsit of struct of player
+    //list of struct of player
+    [Header("Players")] 
     [SerializeField]
     private List<Player> m_PlayerList = new List<Player>();
 
+    public List<Player> GetPlayerList()
+    {
+        return m_PlayerList;
+    }
+
+
     //List of Cards
+    [Header("Cards")]
     [SerializeField]
     private List<house> m_CardList = new List<house>();
     
+    [Header("Text for UI")]
     [SerializeField]
     private TextMeshProUGUI m_DiceRolledText = null;
     [SerializeField]
@@ -97,6 +107,7 @@ public class PlayersController : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI m_Cost3Text = null;
 
+    [Header("Colors")]
     [SerializeField]
     private Image m_CardTopColor = null;
     [SerializeField]
@@ -108,7 +119,7 @@ public class PlayersController : MonoBehaviour
 
 
 
-
+    [Header("Buttons")]
     [SerializeField]
     private Button m_RollButton = null;
     [SerializeField]
@@ -116,6 +127,7 @@ public class PlayersController : MonoBehaviour
     [SerializeField]
     private Button m_PreviewButton = null;
 
+    [Header("GameObject to Activate")]
     [SerializeField]
     private GameObject m_DiceImage = null;
     [SerializeField]
@@ -138,43 +150,50 @@ public class PlayersController : MonoBehaviour
     private GameObject m_ThirdCardToShowGO = null;
     [SerializeField]
     private GameObject m_RailRoadCardGO = null;
+    //see where to put this
     [SerializeField]
     private GameObject m_HouseGO = null;
     [SerializeField]
     private GameObject m_KeepGO = null;
+    [SerializeField]
+    private GameObject m_MainCamera;
     
     private int m_Turn = 0;
     private int m_NumberRolled = 0;
     private bool m_JustRolled = false;
     private float m_Timer = 0;
 
-    public GameObject m_MainCamera;
-
+    private Vector3 m_SpawnPos = new Vector3();
     private bool m_UsingCheats = false;
 
     //Electricity Buy cost
-    private const int m_CostElectricity = 150;
+    private const int COST_TO_BUY_ELECTRICITY = 150;
     //const for ramdomization of the dice
-    private const int m_RandomDiceFirst = 1;
-    private const int m_RandomDiceSecond = 7;
+    private const int RANDOM_DICE_FIRST_NUMBER = 1;
+    private const int RANDOM_DICE_SECOND_NUMBER = 7;
     //const for the dice multiplier for electricity cards
-    private const int m_OnlyHas1ElecMultiplier = 4;
-    private const int m_OnlyHas2ElecMultiplier = 10;
+    private const int FIRST_ELECTRICITY_MULTI = 4;
+    private const int SECOND_ELECTRICITY_MULTI = 10;
 
     //RailRoad Buy Cost
-    private const int m_CostRailRoad = 200;
+    private const int COST_TO_BUY_RAILROAD = 200;
     //RailRoad Cost
-    private const int m_Cost1RailRoad = 25;
-    private const int m_Cost2RailRoad = 50;
-    private const int m_Cost3RailRoad = 100;
-    private const int m_Cost4RailRoad = 200;
+    private const int COST_ONE_RAILROAD = 25;
+    private const int COST_TWO_RAILROAD = 50;
+    private const int COST_THREE_RAILROAD = 100;
+    private const int COST_FOUR_RAILROAD = 200;
+
+    private Vector3 LEFT = new Vector3(1, 0, 0);
+    private Vector3 FORWARD = new Vector3(0, 0, -1);
+    private Vector3 BACKWARD = new Vector3(0, 0, 1);
+    private Vector3 RIGTH = new Vector3(-1, 0, 0);
 
     //taxes
-    private const int m_Tax1Cost = 200;
-    private const int m_Tax2Cost = 75;
+    private const int FIRST_TAX_COST = 200;
+    private const int SECOND_TAX_COST = 75;
     
-    private const float m_Espacement = 0.126f;
 
+    [Header("Places to Spawn")]
     [SerializeField]
     private float m_PositionInX = 0;    
     [SerializeField]
@@ -189,6 +208,7 @@ public class PlayersController : MonoBehaviour
     [SerializeField]
     private float m_PositionInZKeep = 0;
 
+    [Header("Dice Anim Variation")]
     [SerializeField]
     private int m_DiceFontSize = 100;
     [SerializeField]
@@ -200,39 +220,27 @@ public class PlayersController : MonoBehaviour
     [SerializeField]
     private Vector3 m_PositionOfJailVector = new Vector3(10,0,0);
 
+    [Header("Number Of Houses you can put with ID")]
+    [SerializeField]
+    private List<int> m_NumbersOfHousesPossible = new List<int>();
+
     private List<string> m_SetsHouseList = new List<string>();
     private int m_Iter = 0;
 
     private string m_ColorOfCardStr = "";
     private bool m_NextCards = false;
 
-    [SerializeField]
-    private List<int> m_NumbersOfHousesPossible = new List<int>();
-
     //set up des variables membre
-    public void Awake()
+    private void Awake()
     {
-        m_HouseCardGO.SetActive(false);
-        m_NextButton.enabled = false;
-        m_PreviewButton.enabled = false;
-        m_CommunityButtonGO.SetActive(false);
-        m_ChanceButtonGO.SetActive(false);
-        m_CardObjectGO.SetActive(false);
-        m_ElectricityCardGO.SetActive(false);
-
-        m_ChanceCommunityText.enabled = false;
-        UpdateStringCash();
-        UpdateTurnString();
+        GameManager.Instance.SetPlayer(this);
+        SetUpStartButtonAndText();
     }
 
     //set up des variables exterieur
     private void Start()
     {
-        for(int i = 1; i < m_PlayerList.Count; i++)
-        {
-            m_PlayerList[i].m_Camera.SetActive(false);
-        }
-        m_PlayerList[m_Turn].m_Camera.SetActive(true);
+        UpdateCameraForTurn();
     }
     
     //Update de l'argent du joueur ainsi que le timer pour le nombre rouler 
@@ -243,6 +251,12 @@ public class PlayersController : MonoBehaviour
             m_UsingCheats = true;
         }
 
+        ShortAnimForDice(); //Done in HudTxt 
+    }
+
+    //Done in HudTxt
+    private void ShortAnimForDice() 
+    {
         if(m_JustRolled == true)
         {
             m_DiceRolledText.enabled = true;
@@ -264,7 +278,32 @@ public class PlayersController : MonoBehaviour
         }
     }
 
-    // ---Roll Button--- Bouge concretement le player avec le bon joueur selon le tour and check cases
+    private void UpdateCameraForTurn()
+    {
+        for(int i = 1; i < m_PlayerList.Count; i++)
+        {
+            m_PlayerList[i].m_Camera.SetActive(false);
+        }
+        m_PlayerList[m_Turn].m_Camera.SetActive(true);
+    }
+
+    //Done in HudTxt
+    private void SetUpStartButtonAndText()
+    {
+        m_HouseCardGO.SetActive(false);
+        m_NextButton.enabled = false;
+        m_PreviewButton.enabled = false;
+        m_CommunityButtonGO.SetActive(false);
+        m_ChanceButtonGO.SetActive(false);
+        m_CardObjectGO.SetActive(false);
+        m_ElectricityCardGO.SetActive(false);
+        m_MainCamera.SetActive(false);
+        m_ChanceCommunityText.enabled = false;
+        UpdateStringCash();
+        UpdateTurnString();
+    }
+    
+    // ---Roll Button--- Move the player 
     public void MovePlayer()
     {
         if(m_PlayerList[m_Turn].m_TurnInJail <= 0)
@@ -273,9 +312,14 @@ public class PlayersController : MonoBehaviour
         }
         else
         {
-            m_InJailInfoGO.SetActive(true);
+            m_InJailInfoGO.SetActive(true); // Fonction Turn In jail in HUD
         }
 
+        CheckCaseYoureOn();
+    }
+
+    private void CheckCaseYoureOn()
+    {
         //for chance and community
         if(!m_UsingCheats)
         {
@@ -289,7 +333,7 @@ public class PlayersController : MonoBehaviour
         m_CanPutHouseGO.SetActive(false);
     }
 
-    //Fait bouger le player qui est passer en param dans la fonction
+    //Move the transform of the player in the game
     private void Mouvement(GameObject aPlayer)
     {
         if(!m_UsingCheats)
@@ -303,70 +347,75 @@ public class PlayersController : MonoBehaviour
             m_NextButton.enabled = true;
         }
 
-        for (int x = 0; x < m_NumberRolled; x++) // pour pouvoir verifier si il est a la bonne position pour changer de direction
+        for (int i = 0; i < m_NumberRolled; i++) // pour pouvoir verifier si il est a la bonne position pour changer de direction
         {
-            if (aPlayer.transform.position.x < 10 && aPlayer.transform.position.z == 0) // left
+            Vector3 tPos = aPlayer.transform.position;
+            if (tPos.x < 10 && tPos.z == 0)
             {
-                aPlayer.transform.position += new Vector3(1, 0, 0);
+                tPos += LEFT;
                 UpdatePos();
             }
-            else if (aPlayer.transform.position.x == 10 && aPlayer.transform.position.z > -10) // foward
+            else if (tPos.x == 10 && tPos.z > -10)
             {
-                aPlayer.transform.position += new Vector3(0, 0, -1);
+                tPos += FORWARD;
                 UpdatePos();
             }
-            else if (aPlayer.transform.position.z == -10 && aPlayer.transform.position.x > 0) // right
+            else if (tPos.z == -10 && tPos.x > 0)
             {
-                aPlayer.transform.position += new Vector3(-1, 0, 0);
+                tPos += RIGTH;
                 UpdatePos();
             }
-            else // backward
+            else
             {
-                aPlayer.transform.position += new Vector3(0, 0, 1);
+                tPos += BACKWARD;
                 UpdatePos();
             }
+            aPlayer.transform.position = tPos;
         }
 
         m_DiceRolledText.text = m_NumberRolled.ToString();
-        m_JustRolled = true; // Timer entry true
+        m_JustRolled = true;
     }
 
-    //Permet de garder la position du joueur sur la map
+    //Update position in players list fro the good player
     private void UpdatePos()
     {
-        m_PlayerList[m_Turn].m_position = (m_PlayerList[m_Turn].m_position < 40) ? m_PlayerList[m_Turn].m_position + 1 : m_PlayerList[m_Turn].m_position = 1;
+        int tPos = m_PlayerList[m_Turn].m_position;
+        tPos = (tPos < 40) ? tPos + 1 : tPos = 1;
+        m_PlayerList[m_Turn].m_position = tPos;
     }
 
-    //Roll les deux d pour avoir un nombre de deplacements  
+    //Roll the two dice to have a random number of movement 
     private int Roll()
     {
         System.Random rand = new System.Random();
         int t_dice;
-        t_dice = rand.Next(m_RandomDiceFirst, m_RandomDiceSecond) + rand.Next(m_RandomDiceFirst, m_RandomDiceSecond);
+        t_dice = rand.Next(RANDOM_DICE_FIRST_NUMBER, RANDOM_DICE_SECOND_NUMBER) + rand.Next(RANDOM_DICE_FIRST_NUMBER, RANDOM_DICE_SECOND_NUMBER);
 
         m_RollButton.enabled = false;
         m_NextButton.enabled = true;
         return t_dice;
     }
 
+    //Done in HudTxt
+    //Update the text of the cash of the player UI 
+    private void UpdateStringCash()
+    {
+        Debug.Log(m_Turn);
+        m_CashText.text = "Cash " + m_PlayerList[m_Turn].m_Cash.ToString();
+    }
+    
+    //Done in HudTxt
+    //Update the text of the turn UI 
+    private void UpdateTurnString()
+    {
+        m_PlayerTurnText.text = "Player Playing\n" + (m_Turn + 1).ToString();
+    }
+
     // --- Next Button--- permet de changer de tour (prochain player a jouer)
     public void Next()
     {
-        m_HouseCardGO.SetActive(false);
-        m_NextButton.enabled = false;
-        m_PreviewButton.enabled = false;
-        m_CommunityButtonGO.SetActive(false);
-        m_ChanceButtonGO.SetActive(false);
-        m_CardObjectGO.SetActive(false);
-        m_ElectricityCardGO.SetActive(false);
-        m_InJailInfoGO.SetActive(false);
-        m_PossibilitiesToPutHousesGO.SetActive(false);
-        m_CanPutHouseGO.SetActive(false);
-
-        m_RollButton.enabled = true;
-        m_NextButton.enabled = false;
-        m_PreviewButton.enabled = false;
-
+        SetGameObjectForNextTurn();
         if(m_Turn < m_PlayerList.Count - 1)
         {
             m_Turn++;
@@ -382,18 +431,30 @@ public class PlayersController : MonoBehaviour
             m_NbOfTurnInJailText.text = "Nombre of turns in jail left: " + m_PlayerList[m_Turn].m_TurnInJail;
         }
 
-        for(int i = 0; i < m_PlayerList.Count; i++)
-        {
-            m_PlayerList[i].m_Camera.SetActive(false);
-        }
-        m_PlayerList[m_Turn].m_Camera.SetActive(true);
-
+        UpdateCameraForTurn();
         CheckIfHasSameCards();
         UpdateStringCash();
         UpdateTurnString();
-
         //reset the color we're searching
         m_ColorOfCardStr = "";
+    }
+
+    private void SetGameObjectForNextTurn()
+    {
+        m_HouseCardGO.SetActive(false);
+        m_NextButton.enabled = false;
+        m_PreviewButton.enabled = false;
+        m_CommunityButtonGO.SetActive(false);
+        m_ChanceButtonGO.SetActive(false);
+        m_CardObjectGO.SetActive(false);
+        m_ElectricityCardGO.SetActive(false);
+        m_InJailInfoGO.SetActive(false);
+        m_PossibilitiesToPutHousesGO.SetActive(false);
+        m_CanPutHouseGO.SetActive(false);
+
+        m_RollButton.enabled = true;
+        m_NextButton.enabled = false;
+        m_PreviewButton.enabled = false;
     }
 
     // --- Community Button--- appuyer sur le bouton pickup card pour prendre la carte community
@@ -409,12 +470,12 @@ public class PlayersController : MonoBehaviour
 
         if(t_number < 0)
         {
-            m_ChanceCommunityText.text = m_LosingMoneyString[rand.Next(m_RandomDiceFirst - 1, m_LosingMoneyString.Count - 1)] + t_number.ToString() + "$";
+            m_ChanceCommunityText.text = m_LosingMoneyString[rand.Next(RANDOM_DICE_FIRST_NUMBER - 1, m_LosingMoneyString.Count - 1)] + t_number.ToString() + "$";
         }
 
         if(t_number > 0)
         {
-            m_ChanceCommunityText.text = m_GainingMoneyString[rand.Next(m_RandomDiceFirst - 1, m_GainingMoneyString.Count - 1)] + t_number.ToString() + "$";
+            m_ChanceCommunityText.text = m_GainingMoneyString[rand.Next(RANDOM_DICE_FIRST_NUMBER - 1, m_GainingMoneyString.Count - 1)] + t_number.ToString() + "$";
         }
 
         m_PlayerList[m_Turn].m_Cash += t_number;
@@ -428,8 +489,8 @@ public class PlayersController : MonoBehaviour
         {
             m_PlayerList[i].m_Camera.SetActive(false);
         }
-
         m_MainCamera.SetActive(true);
+
         m_ChanceCommunityText.enabled = true;
         m_NextButton.enabled = false;
         m_ChanceButtonGO.SetActive(false);
@@ -437,7 +498,6 @@ public class PlayersController : MonoBehaviour
 
         System.Random rand = new System.Random();
         int t_number = m_Chance[rand.Next(1, m_Chance.Count)];
-
         if(t_number < 0)
         {
             m_ChanceCommunityText.text = m_LosingMoneyString[rand.Next(1, m_LosingMoneyString.Count)] + t_number.ToString() + "$";
@@ -451,14 +511,10 @@ public class PlayersController : MonoBehaviour
         UpdateStringCash();
     }
 
-    //--- X Button---Appeler pour X suite a la lecture de la carte
+    //--- X Button--- appeler pour X suite a la lecture de la carte
     public void ClearCard()
     {
-        for(int i = 0; i < m_PlayerList.Count; i++)
-        {
-            m_PlayerList[i].m_Camera.SetActive(false);
-        }
-        m_PlayerList[m_Turn].m_Camera.SetActive(true);
+        UpdateCameraForTurn();
         m_ChanceCommunityText.enabled = false;
         m_CardObjectGO.SetActive(false);
         m_HouseCardGO.SetActive(false);
@@ -467,19 +523,6 @@ public class PlayersController : MonoBehaviour
         m_PossibilitiesToPutHousesGO.SetActive(false);
         m_RailRoadCardGO.SetActive(false);
         m_NextButton.enabled = true;
-    }
-
-    //Update the text of the cash of the player UI
-    private void UpdateStringCash()
-    {
-        Debug.Log(m_Turn);
-        m_CashText.text = "Cash " + m_PlayerList[m_Turn].m_Cash.ToString();
-    }
-    
-    //Update the text of the turn UI
-    private void UpdateTurnString()
-    {
-        m_PlayerTurnText.text = "Player Playing\n" + (m_Turn + 1).ToString();
     }
     
     //Check the status of the case UI
@@ -497,16 +540,16 @@ public class PlayersController : MonoBehaviour
                         m_PreviewButton.enabled = true;
                         break;
                     case 0:
-                        CheckHousesOn(0,i);
+                        CheckHousesOn(0, i);
                         break;
                     case 1:
-                        CheckHousesOn(1,i);
+                        CheckHousesOn(1, i);
                         break;
                     case 2:
-                        CheckHousesOn(2,i);
+                        CheckHousesOn(2, i);
                         break;
                     case 3:
-                        CheckHousesOn(3,i);
+                        CheckHousesOn(3, i);
                         break;
                 }
             }
@@ -517,60 +560,52 @@ public class PlayersController : MonoBehaviour
     {
         if(m_CardList[i].m_NumberOfHouseOn == 0)
         {
-            m_PlayerList[player].m_Cash += m_CardList[i].m_Data.GetRent();
-            m_PlayerList[m_Turn].m_Cash -= m_CardList[i].m_Data.GetRent();
-            UpdateStringCash();
+            HouseCostPerHouses(player, i);
         }
         else if(m_CardList[i].m_NumberOfHouseOn == 1)
         {
-            m_PlayerList[player].m_Cash += m_CardList[i].m_Data.GetCost1();
-            m_PlayerList[m_Turn].m_Cash -= m_CardList[i].m_Data.GetCost1();
-            UpdateStringCash();
+            HouseCostPerHouses(player, i);
         }
         else if(m_CardList[i].m_NumberOfHouseOn == 2)
         {
-            m_PlayerList[player].m_Cash += m_CardList[i].m_Data.GetCost2();
-            m_PlayerList[m_Turn].m_Cash -= m_CardList[i].m_Data.GetCost2();
-            UpdateStringCash();
+            HouseCostPerHouses(player, i);
         }
         else if(m_CardList[i].m_NumberOfHouseOn == 3)
         {
-            m_PlayerList[player].m_Cash += m_CardList[i].m_Data.GetCost3();
-            m_PlayerList[m_Turn].m_Cash -= m_CardList[i].m_Data.GetCost3();
-            UpdateStringCash();
+            HouseCostPerHouses(player, i);
         }
         else if(m_CardList[i].m_NumberOfHouseOn == 4)
         {
-            m_PlayerList[player].m_Cash += m_CardList[i].m_Data.GetCost4();
-            m_PlayerList[m_Turn].m_Cash -= m_CardList[i].m_Data.GetCost4();
-            UpdateStringCash();
+            HouseCostPerHouses(player, i);
         }
         else if(m_CardList[i].m_NumberOfHouseOn == 5)
         {
+            HouseCostPerHouses(player, i);
+        }
+    }
+
+    private void HouseCostPerHouses(int player, int i)
+    {
             m_PlayerList[player].m_Cash += m_CardList[i].m_Data.GetCostHotel();
             m_PlayerList[m_Turn].m_Cash -= m_CardList[i].m_Data.GetCostHotel();
             UpdateStringCash();
-        }
     }
 
     //--- Buy Button--- Buy the Card (sets the int possesion to the good number)
     public void BuyCard()
     {
         //set up le Id de la carte pour la possesion du joueur
-        m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Possesion = m_PlayerList[m_Turn].m_Id;
-        m_PlayerList[m_Turn].m_HouseBought.Add(m_CardList[m_PlayerList[m_Turn].m_position - 1]);
-        m_PlayerList[m_Turn].m_Cash -= m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetCostOfCard();
+        int tPos = m_PlayerList[m_Turn].m_position - 1;
+        m_CardList[tPos].m_Possesion = m_PlayerList[m_Turn].m_Id;
+        m_PlayerList[m_Turn].m_HouseBought.Add(m_CardList[tPos]);
+        m_PlayerList[m_Turn].m_Cash -= m_CardList[tPos].m_Data.GetCostOfCard();
         UpdateStringCash();
         m_PreviewButton.enabled = false;
         m_HouseCardGO.SetActive(false);
-        for(int i = 0; i < m_PlayerList.Count; i++)
-        {
-            m_PlayerList[i].m_Camera.SetActive(false);
-        }
-        m_PlayerList[m_Turn].m_Camera.SetActive(true);
+        UpdateCameraForTurn();
     }
 
-    //---Preview Button---Preview the card you can possibily buy UI
+    //---Preview Button--- Preview the card you can possibily buy UI
     public void PreviewCard()
     {
         for(int i = 0; i < m_PlayerList.Count; i++)
@@ -578,19 +613,8 @@ public class PlayersController : MonoBehaviour
             m_PlayerList[i].m_Camera.SetActive(false);
         }
         m_MainCamera.SetActive(true);
-        if(m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data != null)
-        {
-            m_CardNameText.text = m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetName();
-            m_CardTopColor.color = m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetColor();
-            m_RentStringText.text =  "RENT $ " + m_CardList[m_PlayerList[m_Turn].m_position- 1].m_Data.GetRent();
-            m_HousePricesText.text = "$" + m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetCost1() + "\n"+
-                                     "$" + m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetCost2() + "\n"+
-                                     "$" + m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetCost3() + "\n"+
-                                     "$" + m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetCost4() + "\n"+
-                                     "$" + m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetCostHotel();
-            m_CardCostText.text =    "Cost: " + m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetCostOfCard().ToString();
-            m_HouseCardGO.SetActive(true);
-        }
+
+        SetUpCardsText();
 
         if(m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Type == "Electricity"  && m_PlayerList[m_Turn].m_position != 0)
         {
@@ -603,35 +627,53 @@ public class PlayersController : MonoBehaviour
         }
     }
 
+    private void SetUpCardsText()
+    {
+        if(m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data != null)
+            {
+                m_CardNameText.text = m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetName();
+                m_CardTopColor.color = m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetColor();
+                m_RentStringText.text =  "RENT $ " + m_CardList[m_PlayerList[m_Turn].m_position- 1].m_Data.GetRent();
+                m_HousePricesText.text = "$" + m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetCost1() + "\n"+
+                                        "$" + m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetCost2() + "\n"+
+                                        "$" + m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetCost3() + "\n"+
+                                        "$" + m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetCost4() + "\n"+
+                                        "$" + m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetCostHotel();
+                m_CardCostText.text =    "Cost: " + m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Data.GetCostOfCard().ToString();
+                m_HouseCardGO.SetActive(true);
+            }
+    }
+
     //--- Buy electricity Button--- Fonction for the button buy of electricity card
     public void BuyElectrictyCard()
     {
-        m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Possesion = m_PlayerList[m_Turn].m_Id;
+        int tPosition = m_PlayerList[m_Turn].m_position - 1;
+
+        m_CardList[tPosition].m_Possesion = m_PlayerList[m_Turn].m_Id;
 
         m_PreviewButton.enabled = false;
-        m_PlayerList[m_Turn].m_Cash -= m_CostElectricity;
+        m_PlayerList[m_Turn].m_Cash -= COST_TO_BUY_ELECTRICITY;
         m_ElectricityCardGO.SetActive(false);
         m_MainCamera.SetActive(false);
         UpdateStringCash();
-        for(int i = 0; i < m_PlayerList.Count; i++)
-        {
-            m_PlayerList[i].m_Camera.SetActive(false);
-        }
-        m_PlayerList[m_Turn].m_Camera.SetActive(true);
+        UpdateCameraForTurn();
     }
     
     //Check if the player is on a community or chance case
     private void CheckCommunityChance()
     {
+        int tPosition = m_PlayerList[m_Turn].m_position - 1;
         //Chance
-        if (m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Type == "Chance")
+        if (m_CardList[tPosition].m_Type == "Chance")
         {
+            //OnChanceCase fonticon in HUD
             m_ChanceButtonGO.SetActive(true);
             m_NextButton.enabled = false;
         }
         //Community
-        if (m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Type == "Community")
+        if (m_CardList[tPosition].m_Type == "Community")
         {
+            //OnCommunityCase fonticon in HUD
             m_CommunityButtonGO.SetActive(true);
             m_NextButton.enabled = false;
         }
@@ -640,15 +682,16 @@ public class PlayersController : MonoBehaviour
     //Check if the player is on a electricity case
     private void CheckElectricity()
     {
+        int tPosition = m_PlayerList[m_Turn].m_position - 1;
         List<int> tPoss = new List<int>();
         int tIndex = 0;
-        if(m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Type == "Electricity" && m_PlayerList[m_Turn].m_position != 0)
+        if(m_CardList[tPosition].m_Type == "Electricity" && m_PlayerList[m_Turn].m_position != 0)
         {
-            if(m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Possesion == -1)
+            if(m_CardList[tPosition].m_Possesion == -1)
             {
-                m_PreviewButton.enabled = true;
+                m_PreviewButton.enabled = true; // EnabledPreviewButton in HUD
             }
-            else if(m_Turn != m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Possesion)
+            else if(m_Turn != m_CardList[tPosition].m_Possesion)
             {
                 for(int i = 0; i < m_CardList.Count; i++)
                 {
@@ -660,7 +703,7 @@ public class PlayersController : MonoBehaviour
 
                 for(int i = 0; i < tPoss.Count; i++)
                 {
-                    if(m_CardList[i].m_Possesion == m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Possesion)
+                    if(m_CardList[i].m_Possesion == m_CardList[tPosition].m_Possesion)
                     {
                         tIndex++;
                     }
@@ -670,19 +713,23 @@ public class PlayersController : MonoBehaviour
                 {
                     System.Random rand = new System.Random();
                     int t_dice;
-                    t_dice = m_OnlyHas1ElecMultiplier * (rand.Next(m_RandomDiceFirst, m_RandomDiceSecond) + rand.Next(m_RandomDiceFirst, m_RandomDiceSecond));
+                    t_dice = FIRST_ELECTRICITY_MULTI * (rand.Next(RANDOM_DICE_FIRST_NUMBER, RANDOM_DICE_SECOND_NUMBER) + rand.Next(RANDOM_DICE_FIRST_NUMBER, RANDOM_DICE_SECOND_NUMBER));
 
                     m_PlayerList[m_Turn].m_Cash -= t_dice;
-                    m_PlayerList[m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Possesion].m_Cash += t_dice;
+
+                    int tPossesion = m_CardList[tPosition].m_Possesion;
+                    m_PlayerList[tPossesion].m_Cash += t_dice;
                 }
                 else//player have both
                 {
                     System.Random rand = new System.Random();
                     int t_dice;
-                    t_dice = m_OnlyHas2ElecMultiplier * (rand.Next(m_RandomDiceFirst, m_RandomDiceSecond) + rand.Next(m_RandomDiceFirst, m_RandomDiceSecond));
+                    t_dice = SECOND_ELECTRICITY_MULTI * (rand.Next(RANDOM_DICE_FIRST_NUMBER, RANDOM_DICE_SECOND_NUMBER) + rand.Next(RANDOM_DICE_FIRST_NUMBER, RANDOM_DICE_SECOND_NUMBER));
 
                     m_PlayerList[m_Turn].m_Cash -= t_dice;
-                    m_PlayerList[m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Possesion].m_Cash += t_dice;
+
+                    int tPossesion = m_CardList[tPosition].m_Possesion;
+                    m_PlayerList[tPossesion].m_Cash += t_dice;
                 }
             }
         }
@@ -708,7 +755,7 @@ public class PlayersController : MonoBehaviour
                 }
 
                 //check if the number of card with the same color is equal to the number of cards of the same color as the card we're comparing to
-                if (tCount == m_PlayerList[m_Turn].m_HouseBought[m_PlayerList[m_Turn].m_HouseBought.Count - 1 - tTimesCheck].m_NumberOfCardsOfTheColor)
+                if (tCount == m_PlayerList[m_Turn].m_HouseBought[m_PlayerList[m_Turn].m_HouseBought.Count - tTimesCheck - 1].m_NumberOfCardsOfTheColor)
                 {
                     m_SetsHouseList.Add(m_ColorOfCardStr);
                     m_CanPutHouseGO.SetActive(true);
@@ -729,7 +776,8 @@ public class PlayersController : MonoBehaviour
     //Check if the player lands on go to jail
     private void CheckJailCase()
     {
-        if(m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Type == "GoToJail")
+        int tPosition = m_PlayerList[m_Turn].m_position - 1;
+        if(m_CardList[tPosition].m_Type == "GoToJail")
         {
             m_PlayerList[m_Turn].m_player.transform.position = m_PositionOfJailVector;
             m_PlayerList[m_Turn].m_position = m_PositionOfJail;
@@ -741,8 +789,8 @@ public class PlayersController : MonoBehaviour
     public void RollInJail()
     {
         System.Random rand = new System.Random();
-        int t_dice1 = rand.Next(m_RandomDiceFirst, m_RandomDiceSecond);
-        int t_dice2 = rand.Next(m_RandomDiceFirst, m_RandomDiceSecond);
+        int t_dice1 = rand.Next(RANDOM_DICE_FIRST_NUMBER, RANDOM_DICE_SECOND_NUMBER);
+        int t_dice2 = rand.Next(RANDOM_DICE_FIRST_NUMBER, RANDOM_DICE_SECOND_NUMBER);
 
         if(t_dice1 == t_dice2)
         {
@@ -766,12 +814,15 @@ public class PlayersController : MonoBehaviour
         }
     }
 
+
+    //Done in HUD
     //--- You Can put houses Button--- Button to see sets of houses you have
     public void SeeHousesToPut()
     {
         m_PossibilitiesToPutHousesGO.SetActive(true);
     }
 
+    //Begin Done In HUD
     //Set up the title, color, cost for sets of cards that are the same
     private void SetUpCards()
     {
@@ -795,10 +846,12 @@ public class PlayersController : MonoBehaviour
                 tIter++;
             }
         }
+
         if(tIter == 2)
         {
             m_ThirdCardToShowGO.SetActive(false);
         }
+
         if(tIter == 3)
         {
             m_ThirdCardToShowGO.SetActive(true);
@@ -806,11 +859,11 @@ public class PlayersController : MonoBehaviour
     }
 
     //fonction to reduce length of code that take 2 gui text, a color and a int for set up
-    private void SetUpHouseYouCanPutHouseOn(TextMeshProUGUI aString, TextMeshProUGUI aString2, Image aImage, int aInt)
+    private void SetUpHouseYouCanPutHouseOn(TextMeshProUGUI aTitle, TextMeshProUGUI aCostText, Image aColorImage, int i)
     {
-        aString.text = m_PlayerList[m_Turn].m_HouseBought[aInt].m_Data.GetName();
-        aString2.text = "Cost for one house: " + m_PlayerList[m_Turn].m_HouseBought[aInt].m_Data.GetCostToBuyAHouse().ToString();
-        aImage.color = m_PlayerList[m_Turn].m_HouseBought[aInt].m_Data.GetColor();
+        aTitle.text = m_PlayerList[m_Turn].m_HouseBought[i].m_Data.GetName();
+        aCostText.text = "Cost for one house: " + m_PlayerList[m_Turn].m_HouseBought[i].m_Data.GetCostToBuyAHouse().ToString();
+        aColorImage.color = m_PlayerList[m_Turn].m_HouseBought[i].m_Data.GetColor();
     }
 
     public void NextHousesPoss()
@@ -838,17 +891,19 @@ public class PlayersController : MonoBehaviour
         }
         SetUpCards();
     }
-
+    //End Done In HUD
+    
     private void CheckTaxesCase()
     {
-        if(m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Type == "Tax1" && m_PlayerList[m_Turn].m_position != 0)
+        int tPosition = m_PlayerList[m_Turn].m_position - 1;
+        if(m_CardList[tPosition].m_Type == "Tax1" && m_PlayerList[m_Turn].m_position != 0)
         {
-            m_PlayerList[m_Turn].m_Cash -= m_Tax1Cost;
+            m_PlayerList[m_Turn].m_Cash -= FIRST_TAX_COST;
             UpdateStringCash();
         }
-        if(m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Type == "Tax2" && m_PlayerList[m_Turn].m_position != 0)
+        if(m_CardList[tPosition].m_Type == "Tax2" && m_PlayerList[m_Turn].m_position != 0)
         {
-            m_PlayerList[m_Turn].m_Cash -= m_Tax2Cost;
+            m_PlayerList[m_Turn].m_Cash -= SECOND_TAX_COST;
             UpdateStringCash();
         }
     }
@@ -857,14 +912,18 @@ public class PlayersController : MonoBehaviour
     {
         List<int> tPoss = new List<int>();
         int tIndex = 0;
-        if(m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Type == "RailRoad" && m_PlayerList[m_Turn].m_position != 0)
+
+        int tPosition = m_PlayerList[m_Turn].m_position - 1;
+        int tCardPossesion =  m_CardList[tPosition].m_Possesion;
+
+        if(m_CardList[tPosition].m_Type == "RailRoad" && tPosition != 0)
         {
             Debug.Log("Enters if RailRoad");
-            if(m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Possesion == -1)
+            if(m_CardList[tPosition].m_Possesion == -1)
             {
                 m_PreviewButton.enabled = true;
             }
-            else if(m_Turn != m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Possesion)
+            else if(m_Turn != tCardPossesion)
             {
                 for(int i = 0; i < m_CardList.Count; i++)
                 {
@@ -876,7 +935,7 @@ public class PlayersController : MonoBehaviour
 
                 for(int i = 0; i < tPoss.Count; i++)
                 {
-                    if(m_CardList[i].m_Possesion == m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Possesion)
+                    if(m_CardList[i].m_Possesion == tCardPossesion)
                     {
                         tIndex++;
                     }
@@ -884,23 +943,23 @@ public class PlayersController : MonoBehaviour
 
                 if (tIndex == 1)//player has 1
                 {
-                    m_PlayerList[m_Turn].m_Cash -= m_Cost1RailRoad;
-                    m_PlayerList[m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Possesion].m_Cash += m_Cost1RailRoad;
+                    m_PlayerList[m_Turn].m_Cash -= COST_ONE_RAILROAD;
+                    m_PlayerList[tCardPossesion].m_Cash += COST_ONE_RAILROAD;
                 }
                 else if(tIndex == 2)//player has 2
                 {
-                    m_PlayerList[m_Turn].m_Cash -= m_Cost2RailRoad;
-                    m_PlayerList[m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Possesion].m_Cash += m_Cost2RailRoad;
+                    m_PlayerList[m_Turn].m_Cash -= COST_TWO_RAILROAD;
+                    m_PlayerList[tCardPossesion].m_Cash += COST_TWO_RAILROAD;
                 }
                 else if(tIndex == 3)//player has 3
                 {
-                    m_PlayerList[m_Turn].m_Cash -= m_Cost3RailRoad;
-                    m_PlayerList[m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Possesion].m_Cash += m_Cost3RailRoad;
+                    m_PlayerList[m_Turn].m_Cash -= COST_THREE_RAILROAD;
+                    m_PlayerList[tCardPossesion].m_Cash += COST_THREE_RAILROAD;
                 }
                 else//player has more than 3
                 {
-                    m_PlayerList[m_Turn].m_Cash -= m_Cost4RailRoad;
-                    m_PlayerList[m_CardList[m_PlayerList[m_Turn].m_position - 1].m_Possesion].m_Cash += m_Cost4RailRoad;
+                    m_PlayerList[m_Turn].m_Cash -= COST_FOUR_RAILROAD;
+                    m_PlayerList[tCardPossesion].m_Cash += COST_FOUR_RAILROAD;
                 }
             }
         }
@@ -911,29 +970,32 @@ public class PlayersController : MonoBehaviour
         int tIter = 0;
         for(int i = 0; i < m_PlayerList[m_Turn].m_HouseBought.Count; i++)
         {
+            int tPosition = m_PlayerList[m_Turn].m_HouseBought[i].m_Position - 1;
+            Vector3 tPositionOfHouseToPut = m_PlayerList[m_Turn].m_HouseBought[i].m_VectorPosition.transform.position;
+
             if(m_PlayerList[m_Turn].m_HouseBought[i].m_Type == m_SetsHouseList[m_Iter])
             {
-                if(tIter == aId && m_CardList[m_PlayerList[m_Turn].m_HouseBought[i].m_Position - 1].m_NumberOfHouseOn < 4)
+                if(tIter == aId && m_CardList[tPosition].m_NumberOfHouseOn < 4)
                 {
                     m_PlayerList[m_Turn].m_Cash -= m_PlayerList[m_Turn].m_HouseBought[i].m_Data.GetCostToBuyAHouse();
-                    m_CardList[m_PlayerList[m_Turn].m_HouseBought[i].m_Position - 1].m_NumberOfHouseOn++;
+                    m_CardList[tPosition].m_NumberOfHouseOn++;
 
-                    Instantiate(m_HouseGO,  
-                                new Vector3((float)(m_PlayerList[m_Turn].m_HouseBought[i].m_VectorPosition.transform.position.x + m_PositionInX + 
-                                (m_CardList[m_PlayerList[m_Turn].m_HouseBought[i].m_Position - 1].m_NumberOfHouseOn * 0.126f)), 
-                                m_PlayerList[m_Turn].m_HouseBought[i].m_VectorPosition.transform.position.y + m_PositionInY, 
-                                m_PlayerList[m_Turn].m_HouseBought[i].m_VectorPosition.transform.position.z + m_PositionInZ),
-                                Quaternion.identity); 
+                    m_SpawnPos.x = tPositionOfHouseToPut.x + m_PositionInX + (m_CardList[tPosition].m_NumberOfHouseOn * 0.126f);
+                    m_SpawnPos.y = tPositionOfHouseToPut.y + m_PositionInY;
+                    m_SpawnPos.z = tPositionOfHouseToPut.z + m_PositionInZ;
+
+                    Instantiate(m_HouseGO, m_SpawnPos, Quaternion.identity); 
                 }
-                else if (tIter == aId && m_CardList[m_PlayerList[m_Turn].m_HouseBought[i].m_Position - 1].m_NumberOfHouseOn == 4)
+                else if (tIter == aId && m_CardList[tPosition].m_NumberOfHouseOn == 4)
                 {
                     m_PlayerList[m_Turn].m_Cash -= m_PlayerList[m_Turn].m_HouseBought[i].m_Data.GetCostToBuyAHouse();
-                    m_CardList[m_PlayerList[m_Turn].m_HouseBought[i].m_Position - 1].m_NumberOfHouseOn++;
-                    Instantiate(m_KeepGO,  
-                                new Vector3((float)(m_PlayerList[m_Turn].m_HouseBought[i].m_VectorPosition.transform.position.x + m_PositionInX - 2.27f), 
-                                m_PlayerList[m_Turn].m_HouseBought[i].m_VectorPosition.transform.position.y + m_PositionInY + 0.55f, 
-                                m_PlayerList[m_Turn].m_HouseBought[i].m_VectorPosition.transform.position.z + m_PositionInZ  - 3.8f),
-                                Quaternion.identity); 
+                    m_CardList[tPosition].m_NumberOfHouseOn++;
+
+                    m_SpawnPos.x = tPositionOfHouseToPut.x + m_PositionInX - 2.27f;
+                    m_SpawnPos.y = tPositionOfHouseToPut.y + m_PositionInY + 0.55f;
+                    m_SpawnPos.z = tPositionOfHouseToPut.z + m_PositionInZ  - 3.8f;
+
+                    Instantiate(m_KeepGO, m_SpawnPos, Quaternion.identity); 
                 }
                 tIter++;
             }
@@ -946,14 +1008,13 @@ public class PlayersController : MonoBehaviour
         m_CardList[m_PlayerList[m_Turn].m_position].m_Possesion = m_PlayerList[m_Turn].m_Id;
 
         m_PreviewButton.enabled = false;
-        m_PlayerList[m_Turn].m_Cash -= m_CostRailRoad;
+        m_PlayerList[m_Turn].m_Cash -= COST_TO_BUY_RAILROAD;
         m_RailRoadCardGO.SetActive(false);
         UpdateStringCash();
-        for(int i = 0; i < m_PlayerList.Count; i++)
-        {
-            m_PlayerList[i].m_Camera.SetActive(false);
-        }
-        m_PlayerList[m_Turn].m_Camera.SetActive(true);
+        UpdateCameraForTurn();
     }
 
+
+    //-------------------------
+    
 }

@@ -2332,6 +2332,86 @@ Transform:
   m_Father: {fileID: 369015834}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &229138022
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 229138024}
+  - component: {fileID: 229138023}
+  m_Layer: 0
+  m_Name: HUD
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &229138023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229138022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a97cefe650a4bec4b9bf2a79467b3fbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FadeTime: 1
+  m_DiceRolledText: {fileID: 0}
+  m_CashText: {fileID: 0}
+  m_ChanceCommunityText: {fileID: 0}
+  m_PlayerTurnText: {fileID: 0}
+  m_RentStringText: {fileID: 0}
+  m_HousePricesText: {fileID: 0}
+  m_CardNameText: {fileID: 0}
+  m_CardCostText: {fileID: 0}
+  m_NbOfTurnInJailText: {fileID: 0}
+  m_Title1Text: {fileID: 0}
+  m_Title2Text: {fileID: 0}
+  m_Title3Text: {fileID: 0}
+  m_Cost1Text: {fileID: 0}
+  m_Cost2Text: {fileID: 0}
+  m_Cost3Text: {fileID: 0}
+  m_CardTopColor: {fileID: 0}
+  m_Houses1PossColor: {fileID: 0}
+  m_Houses2PossColor: {fileID: 0}
+  m_Houses3PossColor: {fileID: 0}
+  m_RollButton: {fileID: 0}
+  m_NextButton: {fileID: 0}
+  m_PreviewButton: {fileID: 0}
+  m_DiceImage: {fileID: 0}
+  m_CardObjectGO: {fileID: 0}
+  m_ChanceButtonGO: {fileID: 0}
+  m_CommunityButtonGO: {fileID: 0}
+  m_HouseCardGO: {fileID: 0}
+  m_ElectricityCardGO: {fileID: 0}
+  m_CanPutHouseGO: {fileID: 0}
+  m_InJailInfoGO: {fileID: 0}
+  m_PossibilitiesToPutHousesGO: {fileID: 0}
+  m_ThirdCardToShowGO: {fileID: 0}
+  m_RailRoadCardGO: {fileID: 0}
+  m_HouseGO: {fileID: 0}
+  m_KeepGO: {fileID: 0}
+  m_MainCamera: {fileID: 0}
+--- !u!4 &229138024
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229138022}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.757675, y: 1.3054335, z: 1.370882}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &273205826
 GameObject:
   m_ObjectHideFlags: 0
@@ -6479,7 +6559,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_LocalRotation: {x: 0.1397824, y: 0.6673028, z: -0.12955366, w: 0.71998876}
+  m_LocalRotation: {x: 0.1397824, y: 0.6673028, z: -0.12955368, w: 0.71998876}
   m_LocalPosition: {x: -5.583563, y: 2.5, z: -0.42471337}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8037,7 +8117,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 698926305}
-  m_LocalRotation: {x: 0.15285552, y: 0.6648358, z: -0.1416701, w: 0.7173271}
+  m_LocalRotation: {x: 0.15285553, y: 0.6648358, z: -0.14167011, w: 0.7173271}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -8329,7 +8409,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 708944476}
-  m_LocalRotation: {x: 0.15285559, y: 0.6648358, z: -0.14167002, w: 0.7173272}
+  m_LocalRotation: {x: 0.15285558, y: 0.6648358, z: -0.14167, w: 0.7173272}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
